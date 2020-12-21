@@ -1,0 +1,17 @@
+.popup {
+    position: fixed;
+    top: 10%;
+    right: 10%;
+    bottom: 10%;
+    left: 10%;
+    padding: 10px;
+}
+.img {
+    height: 800px;
+}
+
+.close-btn {
+    position: absolute;
+    top: -15px;
+    left: 10px
+}
