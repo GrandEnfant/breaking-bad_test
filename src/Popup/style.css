@@ -1,13 +1,28 @@
 .popup {
-    position: fixed;
-    top: 10%;
-    right: 10%;
-    bottom: 10%;
-    left: 10%;
-    padding: 10px;
+    position: absolute;
+    left: 50%;
+    top: 15%;
 }
+
+.popup_inner {
+    background-color: #fff;
+    width: 200px;
+    height: 150px;
+}
+.fixed_wrapper {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.5);
+}
+
 .img {
     height: 800px;
+    opacity: 100%;
 }
 
 .close-btn {
@@ -15,3 +30,4 @@
     top: -15px;
     left: 10px
 }
+
