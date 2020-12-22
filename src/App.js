@@ -2,30 +2,30 @@ import './App.css';
 import React from 'react';
 import {useEffect, useState} from "react";
 import {Popup} from "./Popup/Popup";
-import {bindActionCreators} from "redux";
-import {connect} from "react-redux";
-import {changeStatePopup, changeSerialData, changeCharactersData, changeCharacterPhoto} from "./redux/actions";
+import {useSelector, useDispatch} from "react-redux";
+import {changeCharacterPhoto, changeStatePopup, changeSerialData, changeCharactersData} from "./redux/actions";
 const SeasonList = React.lazy(() => import("./SeasonList/SeasonList"));
 
 function App({
-                 changeCharImg,
-                 characterPhoto,
-                 changeStatePopup,
-                 popupIsOpen,
-                 dataSerial,
-                 changeSerialData,
-                 changeCharactersData,
-                 dataCharacters
+                 // changeCharImg,
+                 // changeStatePopup,
+                 // changeSerialData,
+                 // changeCharactersData,
              }) {
 
     const [isLoaded, setIsLoaded] = useState(false);
     const [error, setError] = useState();
-
+    const characterPhoto = useSelector(state => state.characterPhoto);
+    const popupIsOpen = useSelector(state => state.popupIsOpen);
+    const dataSerial = useSelector(state => state.dataSerial);
+    const dataCharacters = useSelector(state => state.dataCharacters);
+    const dispatch = useDispatch();
+    
     useEffect(() => {
         fetch("https://breakingbadapi.com/api/episodes?series=Breaking+Bad")
             .then(res => res.json())
             .then((result) => {
-                changeSerialData(result);
+                dispatch(changeSerialData(result));
             }).then(() => {
             setIsLoaded(true);
         })
@@ -36,7 +36,7 @@ function App({
         fetch("https://breakingbadapi.com/api/characters")
             .then(res => res.json())
             .then((result) => {
-                changeCharactersData(result);
+                dispatch(changeCharactersData(result));
             }).then(() => {
             setIsLoaded(true);
         })
@@ -63,13 +63,13 @@ function App({
 
     return (
         <div className="App">
-            {!!error && error}
+            {/*{!!error && error}*/}
             {!isLoaded ? <div> loading... </div> :
                 <React.Suspense fallback={<div>Loading...</div>}>
                 <div>
                     {groupedEpisodes.map((item, id) =>
-                             <SeasonList key={id} numberSeason={id} item={item} changeCharImg={changeCharImg} dataCharacters={dataCharacters}
-                                    changeStatePopup={changeStatePopup} popupIsOpen={popupIsOpen}/>
+                             <SeasonList key={id} numberSeason={id} item={item} changeCharacterPhoto={() => dispatch(changeCharacterPhoto())} dataCharacters={dataCharacters}
+                                    changeStatePopup={() => dispatch(changeStatePopup())} popupIsOpen={popupIsOpen}/>
                     )}
                 </div>
                 </React.Suspense>
@@ -78,7 +78,7 @@ function App({
                 <Popup
                     text='Закрыть'
                     src={characterPhoto.characterPhoto}
-                    closePopup={changeStatePopup}
+                    closePopup={() => dispatch(changeStatePopup(popupIsOpen))}
                 >
                 </Popup>
                 : null
@@ -88,23 +88,4 @@ function App({
     );
 }
 
-const mapStateToProps = state => {
-    return {
-        characterPhoto: state.characterPhoto,
-        popupIsOpen: state.popupIsOpen,
-        dataSerial: state.dataSerial,
-        dataCharacters: state.dataCharacters
-    }
-};
-const mapDispatchToProps = dispatch => {
-    return {
-        changeCharImg: bindActionCreators(changeCharacterPhoto, dispatch),
-        changeStatePopup: bindActionCreators(changeStatePopup, dispatch),
-        changeSerialData: bindActionCreators(changeSerialData, dispatch),
-        changeCharactersData: bindActionCreators(changeCharactersData, dispatch)
-    }
-};
-
-
-const ConnectedApp = connect(mapStateToProps, mapDispatchToProps)(App);
-export default ConnectedApp;
+    export default App;
