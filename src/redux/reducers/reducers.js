@@ -49,3 +49,13 @@ export const dataCharactersReducer = (state = DataCharactersInitial, action) => 
         default: return state;
     }
 };
+export const isLoadedReducer = (state = false, action) => {
+    switch (action.type) {
+        case Types.CHANGE_IS_LOADER: {
+            let copiedState = state;
+            copiedState = action.isLoad;
+            return {...copiedState}
+        }
+        default: return state;
+    }
+};

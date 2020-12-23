@@ -3,43 +3,49 @@ import React from 'react';
 import {useEffect, useState} from "react";
 import {Popup} from "./Popup/Popup";
 import {useSelector, useDispatch} from "react-redux";
-import {changeCharacterPhoto, changeStatePopup, changeSerialData, changeCharactersData} from "./redux/actions";
+import {changeCharacterPhoto, changeStatePopup, changeSerialData, changeCharactersData, fetchURL} from "./redux/actions";
 const SeasonList = React.lazy(() => import("./SeasonList/SeasonList"));
+
 
 function App() {
 
-    const [isLoaded, setIsLoaded] = useState(false);
-    const [error, setError] = useState();
+    // const [isLoaded, setIsLoaded] = useState(false);
+    // const [error, setError] = useState();
     const characterPhoto = useSelector(state => state.characterPhoto);
     const popupIsOpen = useSelector(state => state.popupIsOpen);
     const dataSerial = useSelector(state => state.dataSerial);
     const dataCharacters = useSelector(state => state.dataCharacters);
+    const isLoad = useSelector(state => state.isLoad);
     const dispatch = useDispatch();
-    console.log('rerender');
-    useEffect(() => {
-        fetch("https://breakingbadapi.com/api/episodes?series=Breaking+Bad")
-            .then(res => res.json())
-            .then((result) => {
-                dispatch(changeSerialData(result));
-            }).then(() => {
-            setIsLoaded(true);
-        })
-            .catch((error) => {
-                setIsLoaded(false);
-                setError(error);
-            });
-        fetch("https://breakingbadapi.com/api/characters")
-            .then(res => res.json())
-            .then((result) => {
-                dispatch(changeCharactersData(result));
-            }).then(() => {
-            setIsLoaded(true);
-        })
-            .catch((error) => {
-                setIsLoaded(false);
-                setError(error);
-            });
-    }, [dataSerial.dataSerial]);
+   fetchURL("https://breakingbadapi.com/api/episodes?series=Breaking+Bad");
+   console.log('rrr')
+    // fetchURL("https://breakingbadapi.com/api/characters");
+
+
+    // useEffect(() => {
+    //     fetch("https://breakingbadapi.com/api/episodes?series=Breaking+Bad")
+    //         .then(res => res.json())
+    //         .then((result) => {
+    //             dispatch(changeSerialData(result));
+    //         }).then(() => {
+    //         setIsLoaded(true);
+    //     })
+    //         .catch((error) => {
+    //             setIsLoaded(false);
+    //             setError(error);
+    //         });
+    //     fetch("https://breakingbadapi.com/api/characters")
+    //         .then(res => res.json())
+    //         .then((result) => {
+    //             dispatch(changeCharactersData(result));
+    //         }).then(() => {
+    //         setIsLoaded(true);
+    //     })
+    //         .catch((error) => {
+    //             setIsLoaded(false);
+    //             setError(error);
+    //         });
+    // }, [dataSerial.dataSerial]);
 
     const groupBySeason = (array) => {
         if (array.data !== undefined) {
@@ -55,11 +61,12 @@ function App() {
         }
     };
     const groupedEpisodes = groupBySeason(dataSerial);
-
+console.log(isLoad);
+console.log(dataSerial)
     return (
         <div className="App">
-            {!!error && error}
-            {!isLoaded ? <div> loading... </div> :
+            {/*{!!error && error}*/}
+            {!isLoad ? <div> loading... </div> :
                 <React.Suspense fallback={<div>Loading...</div>}>
                 <div>
                     {groupedEpisodes.map((item, id) =>

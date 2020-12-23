@@ -1,6 +1,8 @@
 import {Types} from "./types";
 
 
+
+
 export function changeCharacterPhoto(charImg) {
     return {
         type: Types.CHANGE_CHARACTER_PHOTO,
@@ -30,3 +32,28 @@ export function changeCharactersData(dataCharacters) {
         payload: {data: dataCharacters}
     }
 }
+
+export function setIsLoaded(isLoad) {
+    return {
+        type: Types.CHANGE_IS_LOADER,
+        isLoad: isLoad
+    }
+}
+
+export function fetchURL(url) {
+    return (dispatch) => {
+        console.log('tiut');
+        fetch(url)
+        .then(res => res.json())
+        .then((result) => {
+            console.log('dispatch');
+            dispatch(changeCharactersData(result));
+
+        })
+        .then(() =>  setIsLoaded(true))
+
+        // .catch((error) => {
+        //     setIsLoaded(false);
+        //     setError(error);
+        // });
+}}
