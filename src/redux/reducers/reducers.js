@@ -1,6 +1,6 @@
 import {Types} from "../types";
 
-const imgInitialState = {charImg: ''};
+const imgInitialState = {characterPhoto: ''};
 const statusPopupInitial = {popupIsOpen: false};
 const DataSerialInitial = {dataSerial: []};
 const DataCharactersInitial = {dataCharacters: []};

@@ -3,6 +3,7 @@ import './style.css';
 import closeBtn from './close_img.png'
 
 export const Popup = ({closePopup, src}) => {
+    console.log(src)
     return (
         <div className={'fixed_wrapper'}>
             <div className='popup'>

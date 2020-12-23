@@ -2,13 +2,12 @@ import React from 'react';
 import './style.css'
 const CharactersList = React.lazy(() => import("./Characters/CharactersList"));
 
- const EpisodeCard = ({episodeData, dataCharacters, changeCharacterPhoto, changeStatePopup}) => {
-     console.log(dataCharacters)
+ const EpisodeCard = ({episodeData, dispatch, dataCharacters, changeCharacterPhoto, changeStatePopup}) => {
     const getSrcName = (clickedName) => {
         let result = dataCharacters.data.find(obj => (obj.name === clickedName));
         if (result !== undefined) {
             let srcImg = result.img;
-            changeCharacterPhoto(srcImg);
+            dispatch(changeCharacterPhoto(srcImg));
             changeStatePopup();
         }
     };

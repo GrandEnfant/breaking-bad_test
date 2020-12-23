@@ -6,12 +6,7 @@ import {useSelector, useDispatch} from "react-redux";
 import {changeCharacterPhoto, changeStatePopup, changeSerialData, changeCharactersData} from "./redux/actions";
 const SeasonList = React.lazy(() => import("./SeasonList/SeasonList"));
 
-function App({
-                 // changeCharImg,
-                 // changeStatePopup,
-                 // changeSerialData,
-                 // changeCharactersData,
-             }) {
+function App() {
 
     const [isLoaded, setIsLoaded] = useState(false);
     const [error, setError] = useState();
@@ -20,7 +15,7 @@ function App({
     const dataSerial = useSelector(state => state.dataSerial);
     const dataCharacters = useSelector(state => state.dataCharacters);
     const dispatch = useDispatch();
-    
+    console.log('rerender');
     useEffect(() => {
         fetch("https://breakingbadapi.com/api/episodes?series=Breaking+Bad")
             .then(res => res.json())
@@ -63,13 +58,19 @@ function App({
 
     return (
         <div className="App">
-            {/*{!!error && error}*/}
+            {!!error && error}
             {!isLoaded ? <div> loading... </div> :
                 <React.Suspense fallback={<div>Loading...</div>}>
                 <div>
                     {groupedEpisodes.map((item, id) =>
-                             <SeasonList key={id} numberSeason={id} item={item} changeCharacterPhoto={() => dispatch(changeCharacterPhoto())} dataCharacters={dataCharacters}
-                                    changeStatePopup={() => dispatch(changeStatePopup())} popupIsOpen={popupIsOpen}/>
+                             <SeasonList key={id}
+                                         numberSeason={id}
+                                         item={item}
+                                         changeCharacterPhoto={changeCharacterPhoto}
+                                         dispatch={dispatch}
+                                         dataCharacters={dataCharacters}
+                                         changeStatePopup={() => dispatch(changeStatePopup())}
+                                         popupIsOpen={popupIsOpen}/>
                     )}
                 </div>
                 </React.Suspense>

@@ -2,7 +2,7 @@ import React from 'react';
 import './style.css'
 const EpisodeCard = React.lazy(() => import("./Episode/Episode"));
 
-const SeasonList = ({item, numberSeason, changeCharacterPhoto, dataCharacters, changeStatePopup, popupIsOpen}) => {
+const SeasonList = ({item, numberSeason, dispatch, changeCharacterPhoto, dataCharacters, changeStatePopup, popupIsOpen}) => {
    return (
        <React.Fragment>
        <div className={'title'}> Season {item[numberSeason].season} </div>
@@ -11,6 +11,7 @@ const SeasonList = ({item, numberSeason, changeCharacterPhoto, dataCharacters, c
                <React.Suspense key={idx} fallback={<div>Loading...</div>}>
                <EpisodeCard changeCharacterPhoto={changeCharacterPhoto}
                             episodeData={elem}
+                            dispatch={dispatch}
                             dataCharacters={dataCharacters}
                             changeStatePopup={changeStatePopup}
                             popupIsOpen={popupIsOpen.popupIsOpen}
