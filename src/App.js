@@ -3,23 +3,25 @@ import React from 'react';
 import {useEffect, useState} from "react";
 import {Popup} from "./Popup/Popup";
 import {useSelector, useDispatch} from "react-redux";
-import {changeCharacterPhoto, changeStatePopup, changeSerialData, changeCharactersData, fetchURL} from "./redux/actions";
+import {changeCharacterPhoto, changeStatePopup, changeSerialData, changeCharactersData, loadData} from "./redux/actions";
 const SeasonList = React.lazy(() => import("./SeasonList/SeasonList"));
 
 
 function App() {
 
-    // const [isLoaded, setIsLoaded] = useState(false);
-    // const [error, setError] = useState();
     const characterPhoto = useSelector(state => state.characterPhoto);
     const popupIsOpen = useSelector(state => state.popupIsOpen);
     const dataSerial = useSelector(state => state.dataSerial);
     const dataCharacters = useSelector(state => state.dataCharacters);
     const isLoad = useSelector(state => state.isLoad);
     const dispatch = useDispatch();
-   fetchURL("https://breakingbadapi.com/api/episodes?series=Breaking+Bad");
-   console.log('rrr')
-    // fetchURL("https://breakingbadapi.com/api/characters");
+
+    useEffect(() => {
+        dispatch(loadData({typeData: 'serial', url: "https://breakingbadapi.com/api/episodes?series=Breaking+Bad"}))
+        dispatch(loadData({typeData: 'characters', url: "https://breakingbadapi.com/api/characters"}))}, [dataSerial]
+    );
+   console.log(dataCharacters);
+    // loadData("https://breakingbadapi.com/api/characters");
 
 
     // useEffect(() => {
@@ -48,6 +50,8 @@ function App() {
     // }, [dataSerial.dataSerial]);
 
     const groupBySeason = (array) => {
+        console.log(array);
+        console.log('naverch');
         if (array.data !== undefined) {
             let mapCollection = new Map();
             let filteredSeason = array.data.map((el, idx) => array.data.filter(elem => +elem.season === +array.data[idx].season));
@@ -62,7 +66,9 @@ function App() {
     };
     const groupedEpisodes = groupBySeason(dataSerial);
 console.log(isLoad);
-console.log(dataSerial)
+console.log(isLoad);
+console.log(isLoad);
+// console.log(dataSerial)
     return (
         <div className="App">
             {/*{!!error && error}*/}

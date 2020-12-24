@@ -40,8 +40,10 @@ export const dataSerialReducer = (state = DataSerialInitial, action) => {
 };
 
 export const dataCharactersReducer = (state = DataCharactersInitial, action) => {
+    console.log('ttt')
     switch (action.type) {
         case Types.CHANGE_CHARACTERS_DATA: {
+            console.log('333')
             let copiedState = state;
             copiedState = action.payload;
             return {...copiedState}
@@ -54,6 +56,7 @@ export const isLoadedReducer = (state = false, action) => {
         case Types.CHANGE_IS_LOADER: {
             let copiedState = state;
             copiedState = action.isLoad;
+            console.log(copiedState)
             return {...copiedState}
         }
         default: return state;

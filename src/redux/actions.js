@@ -40,20 +40,19 @@ export function setIsLoaded(isLoad) {
     }
 }
 
-export function fetchURL(url) {
+export const loadData = ({typeData, url}) => {
     return (dispatch) => {
-        console.log('tiut');
         fetch(url)
         .then(res => res.json())
         .then((result) => {
-            console.log('dispatch');
-            dispatch(changeCharactersData(result));
-
+            if (typeData === 'serial') {
+                dispatch(changeSerialData(result));
+                dispatch(setIsLoaded(true));
+            } else if (typeData === 'characters') {
+                dispatch(changeCharactersData(result));
+            }
         })
-        .then(() =>  setIsLoaded(true))
-
-        // .catch((error) => {
-        //     setIsLoaded(false);
-        //     setError(error);
-        // });
-}}
+        .catch((error) => {
+            setIsLoaded(false);
+        });
+}};
