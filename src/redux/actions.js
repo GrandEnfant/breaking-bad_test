@@ -1,8 +1,5 @@
 import {Types} from "./types";
 
-
-
-
 export function changeCharacterPhoto(charImg) {
     return {
         type: Types.CHANGE_CHARACTER_PHOTO,
@@ -53,6 +50,7 @@ export const loadData = ({typeData, url}) => {
             }
         })
         .catch((error) => {
+
             setIsLoaded(false);
         });
 }};
