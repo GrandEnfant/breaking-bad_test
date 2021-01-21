@@ -3,12 +3,12 @@ import './style.css';
 import closeBtn from './close_img.png';
 import PropTypes from 'prop-types';
 
-Popup.propTypes = {
-  closePopup: PropTypes.func,
-  src: PropTypes.string,
-};
-
 export const Popup = ({closePopup, src}) => {
+  Popup.propTypes = {
+    closePopup: PropTypes.func,
+    src: PropTypes.string,
+  };
+
   return (
     <div className={'fixed_wrapper'}>
       <div className='popup'>
@@ -21,3 +21,4 @@ export const Popup = ({closePopup, src}) => {
     </div>
   );
 };
+

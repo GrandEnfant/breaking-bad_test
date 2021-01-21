@@ -3,15 +3,6 @@ import './style.css';
 import PropTypes from 'prop-types';
 const EpisodeCard = React.lazy(() => import('./Episode/Episode'));
 
-SeasonList.propTypes = {
-  item: PropTypes.object,
-  numberSeason: PropTypes.number,
-  dispatch: PropTypes.func,
-  changeCharacterPhoto: PropTypes.object,
-  dataCharacters: PropTypes.object,
-  changeStatePopup: PropTypes.func,
-  popupIsOpen: PropTypes.func,
-};
 
 const SeasonList = ({item,
   numberSeason,
@@ -20,6 +11,16 @@ const SeasonList = ({item,
   dataCharacters,
   changeStatePopup,
   popupIsOpen}) => {
+  SeasonList.propTypes = {
+    item: PropTypes.object,
+    numberSeason: PropTypes.number,
+    dispatch: PropTypes.func,
+    changeCharacterPhoto: PropTypes.object,
+    dataCharacters: PropTypes.object,
+    changeStatePopup: PropTypes.func,
+    popupIsOpen: PropTypes.func,
+  };
+
   return (
     <React.Fragment>
       <div className={'title'}> Season {item[numberSeason].season} </div>

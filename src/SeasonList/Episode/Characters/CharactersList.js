@@ -2,12 +2,11 @@ import React from 'react';
 import './style.css';
 import PropTypes from 'prop-types';
 
-CharactersList.propTypes = {
-  episodeData: PropTypes.object,
-  getSrcName: PropTypes.func,
-};
-
 const CharactersList = ({episodeData, getSrcName}) => {
+  CharactersList.propTypes = {
+    episodeData: PropTypes.object,
+    getSrcName: PropTypes.func,
+  };
   return (
     <div className={'episodeCharacters'}>
       <ul>

@@ -3,19 +3,19 @@ import './style.css';
 const CharactersList = React.lazy(() => import('./Characters/CharactersList'));
 import PropTypes from 'prop-types';
 
-EpisodeCard.propTypes = {
-  episodeData: PropTypes.object,
-  dispatch: PropTypes.func,
-  changeCharacterPhoto: PropTypes.object,
-  dataCharacters: PropTypes.object,
-  changeStatePopup: PropTypes.func,
-};
 
 const EpisodeCard = ({episodeData,
   dispatch,
   dataCharacters,
   changeCharacterPhoto,
   changeStatePopup}) => {
+  EpisodeCard.propTypes = {
+    episodeData: PropTypes.object,
+    dispatch: PropTypes.func,
+    changeCharacterPhoto: PropTypes.object,
+    dataCharacters: PropTypes.object,
+    changeStatePopup: PropTypes.func,
+  };
   const getSrcName = (clickedName) => {
     const result = dataCharacters.data.find(obj => (obj.name === clickedName));
     if (result !== undefined) {
