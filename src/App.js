@@ -10,21 +10,24 @@ const SeasonList = React.lazy(() => import('./SeasonList/SeasonList'));
 
 
 function App() {
-  const characterPhoto = useSelector(state => state.characterPhoto);
-  const popupIsOpen = useSelector(state => state.popupIsOpen);
-  const dataSerial = useSelector(state => state.dataSerial);
-  const dataCharacters = useSelector(state => state.dataCharacters);
-  const isLoad = useSelector(state => state.isLoad);
+  const characterPhoto = useSelector((state) => state.characterPhoto);
+  const popupIsOpen = useSelector((state) => state.popupIsOpen);
+  const dataSerial = useSelector((state) => state.dataSerial);
+  const dataCharacters = useSelector((state) => state.dataCharacters);
+  const isLoad = useSelector((state) => state.isLoad);
+  const error = useSelector((state) => state.error);
   const dispatch = useDispatch();
   const URLSerial = 'https://breakingbadapi.com/api/episodes?series=Breaking+Bad';
   const URLCharacters = 'https://breakingbadapi.com/api/characters';
 
   useEffect(() => {
     dispatch(loadData({typeData: 'serial', url: URLSerial}));
-    dispatch(loadData({typeData: 'characters', url: URLCharacters}))}, [URLSerial]);
+    dispatch(loadData({typeData: 'characters', url: URLCharacters}));
+  },
+  [URLSerial]);
   const groupBySeason = (array) => {
     if (array.data !== undefined) {
-      let mapCollection = new Map();
+      const mapCollection = new Map();
       const filteredSeason = array.data.map((el, idx) =>
         array.data.filter((elem) => +elem.season === +array.data[idx].season));
       const arrTempEpisode = filteredSeason.map((e) => e.map((el) => el));
@@ -41,7 +44,7 @@ function App() {
 
   return (
     <div className="App">
-      { /*    {!!error && error}*/ }
+      {!!error && error}
       {!isLoad ? <div> loading... </div> :
                 <React.Suspense fallback={<div>Loading...</div>}>
                   <div>
@@ -53,7 +56,7 @@ function App() {
                         dispatch={dispatch}
                         dataCharacters={dataCharacters}
                         changeStatePopup={() => dispatch(changeStatePopup())}
-                        popupIsOpen={popupIsOpen}/>
+                        popupIsOpen={popupIsOpen}/>,
                     )}
                   </div>
                 </React.Suspense>
